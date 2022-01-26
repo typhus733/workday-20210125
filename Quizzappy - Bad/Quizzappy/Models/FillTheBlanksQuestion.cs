@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Quizzappy.Models
 {
-    public class FillTheBlanksQuestion : Question
+    public class FillTheBlanksQuestion
     {
         [Required]
-        public virtual List<TextAnswer> CorrectAnswers { get; set; }
+        public List<TextAnswer> CorrectAnswers { get; set; }
     }
 }

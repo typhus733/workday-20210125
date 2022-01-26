@@ -10,6 +10,7 @@ namespace Quizzappy.Models
     {
         [Key]
         public int QuestionId { get; set; }
+        public int Score { get; set; }
         [Required]
         public string QuestionText { get; set; }
     }

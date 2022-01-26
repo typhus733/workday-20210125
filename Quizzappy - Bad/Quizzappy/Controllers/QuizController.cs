@@ -75,7 +75,6 @@ namespace Quizzappy.Controllers
                     _context.SaveChanges();
                 }
                 _context.Quizzes.Add(newQuiz);
-                _context.SaveChanges();
 
                 return new CreatedResult($"/quizzes/{newQuiz.QuizId}", newQuiz);
             }
@@ -118,12 +117,70 @@ namespace Quizzappy.Controllers
                 quiz.FillTheBlanksQuestions = patchQuiz.FillTheBlanksQuestions ?? quiz.FillTheBlanksQuestions;
                 quiz.MultipleChoiceQuestions = patchQuiz.MultipleChoiceQuestions ?? quiz.MultipleChoiceQuestions;
                 quiz.ShortAnswerQuestions = patchQuiz.ShortAnswerQuestions ?? quiz.ShortAnswerQuestions;
-                quiz.QuizName = patchQuiz.QuizName ?? quiz.QuizName;
 
                 _context.Update(quiz);
                 _context.SaveChanges();
 
                 return new CreatedResult($"/quizzes/{patchQuiz.QuizId}", patchQuiz);
+            }
+            catch (Exception e)
+            {
+                return new BadRequestObjectResult(e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("{quizId}/grade")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<int> GradeQuizzes([FromRoute] int quizId, [FromBody] List<List<TextAnswer>> answers)
+        {
+            try
+            {
+                var quizList = _context.Quizzes as IQueryable<Quiz>;
+                var quiz = quizList.FirstOrDefault(q => q.QuizId.Equals(quizId));
+                int averageScore = 0;
+
+                int totalScore = 0;
+                for (int i = 0; i < answers.Count; i++)
+                {
+                    for (int j = 0; j < quiz.MultipleChoiceQuestions.Count; j++)
+                    {
+                      totalScore += quiz.MultipleChoiceQuestions[j].Score;
+                    }
+
+                    for (int j = 0; j < quiz.ShortAnswerQuestions.Count; j++)
+                    {
+                        if (answers[i][j].Answer.Length < quiz.ShortAnswerQuestions[j].WordLimit)
+                        {
+                            totalScore += quiz.ShortAnswerQuestions[j].Score;
+                        }
+                    }
+                    for (int j = 0; j < quiz.FillTheBlanksQuestions.Count; j++)
+                    {
+                        bool allMatched = true;
+                        for (int k = 0; k < quiz.FillTheBlanksQuestions[i].CorrectAnswers.Count; k++)
+                        {
+                            if (quiz.FillTheBlanksQuestions[j].CorrectAnswers[k] !=
+                                answers[i][j])
+                            {
+                                allMatched = false;
+                            }
+                        }
+
+                        if (allMatched)
+                        {
+                            totalScore += 6;
+                        }
+
+                    }
+                    averageScore += totalScore;
+
+                }
+
+                averageScore /= answers.Count;
+
+                return new OkObjectResult(averageScore);
             }
             catch (Exception e)
             {

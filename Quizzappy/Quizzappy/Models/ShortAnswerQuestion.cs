@@ -9,6 +9,7 @@ namespace Quizzappy.Models
     public class ShortAnswerQuestion : Question
     {
         [Required]
+        [Range(50, 500)]
         public int WordLimit { get; set; }
     }
 }

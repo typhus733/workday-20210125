@@ -115,8 +115,6 @@ namespace Quizzappy
 
                                 var question = new FillTheBlanksQuestion
                                 {
-                                    QuestionId = totalQuestions,
-                                    QuestionText = beginningQuestion + "_____" + endQuestion  + "_____" + $"{totalQuestions}",
                                     CorrectAnswers = fillTheBlanksAnswers
                                 };
 
