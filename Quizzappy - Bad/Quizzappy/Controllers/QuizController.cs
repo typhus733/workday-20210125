@@ -75,6 +75,8 @@ namespace Quizzappy.Controllers
                     _context.SaveChanges();
                 }
                 _context.Quizzes.Add(newQuiz);
+                _context.SaveChanges();
+
 
                 return new CreatedResult($"/quizzes/{newQuiz.QuizId}", newQuiz);
             }
@@ -117,6 +119,7 @@ namespace Quizzappy.Controllers
                 quiz.FillTheBlanksQuestions = patchQuiz.FillTheBlanksQuestions ?? quiz.FillTheBlanksQuestions;
                 quiz.MultipleChoiceQuestions = patchQuiz.MultipleChoiceQuestions ?? quiz.MultipleChoiceQuestions;
                 quiz.ShortAnswerQuestions = patchQuiz.ShortAnswerQuestions ?? quiz.ShortAnswerQuestions;
+                quiz.QuizName = patchQuiz.QuizName ?? quiz.QuizName;
                 quiz.TotalScore = patchQuiz.TotalScore;
 
                 _context.Update(quiz);
@@ -140,7 +143,7 @@ namespace Quizzappy.Controllers
             {
                 var quizList = _context.Quizzes as IQueryable<Quiz>;
                 var quiz = quizList.FirstOrDefault(q => q.QuizId.Equals(quizId));
-                int averageScore = 0;
+                float averageScore = 0;
 
                 int totalScore = 0;
                 for (int i = 0; i < answers.Count; i++)
