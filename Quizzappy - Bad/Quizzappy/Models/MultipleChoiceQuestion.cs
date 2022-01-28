@@ -10,6 +10,6 @@ namespace Quizzappy.Models
     {
         [Required]
         public virtual List<TextAnswer> Answers { get; set; }
-        public string CorrectAnswer { get; set; }
+        public TextAnswer CorrectAnswer { get; set; }
     }
 }
