@@ -92,7 +92,7 @@ namespace Quizzappy
                                     QuestionId = totalQuestions,
                                     Score = 5,
                                     QuestionText = $"{totalQuestions}" + ": " + beginningQuestion + " " + endQuestion,
-                                    WordLimit = 500+5*rnd.Next(0, 100)
+                                    WordLimit = rnd.Next(50, 501)
                                 };
                                 totalScore += 5;
                                 shortAnswerQuestions.Add(question);
