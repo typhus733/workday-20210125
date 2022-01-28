@@ -75,7 +75,7 @@ namespace Quizzappy
                                 var question = new MultipleChoiceQuestion
                                 {
                                     QuestionId = totalQuestions,
-                                    QuestionText = beginningQuestion + endQuestion + $"{totalQuestions}",
+                                    QuestionText = $"{totalQuestions}" + ": " + beginningQuestion + " " + endQuestion,
                                     Answers = multipleChoiceAnswers,
                                     CorrectAnswer = "E",
                                 };
@@ -88,7 +88,7 @@ namespace Quizzappy
                                 var question = new ShortAnswerQuestion
                                 {
                                     QuestionId = totalQuestions,
-                                    QuestionText = beginningQuestion + endQuestion + $"{totalQuestions}",
+                                    QuestionText = $"{totalQuestions}" + ": " + beginningQuestion + " " + endQuestion,
                                     WordLimit = 500+5*rnd.Next(0, 100)
                                 };
 
@@ -115,6 +115,8 @@ namespace Quizzappy
 
                                 var question = new FillTheBlanksQuestion
                                 {
+                                    QuestionId = totalQuestions,
+                                    QuestionText = $"{totalQuestions}" + ": "+  beginningQuestion + " " + endQuestion,
                                     CorrectAnswers = fillTheBlanksAnswers
                                 };
 
