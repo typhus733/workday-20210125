@@ -117,6 +117,7 @@ namespace Quizzappy.Controllers
                 quiz.FillTheBlanksQuestions = patchQuiz.FillTheBlanksQuestions ?? quiz.FillTheBlanksQuestions;
                 quiz.MultipleChoiceQuestions = patchQuiz.MultipleChoiceQuestions ?? quiz.MultipleChoiceQuestions;
                 quiz.ShortAnswerQuestions = patchQuiz.ShortAnswerQuestions ?? quiz.ShortAnswerQuestions;
+                quiz.TotalScore = patchQuiz.TotalScore;
 
                 _context.Update(quiz);
                 _context.SaveChanges();

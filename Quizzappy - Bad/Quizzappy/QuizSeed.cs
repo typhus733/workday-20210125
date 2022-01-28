@@ -29,6 +29,7 @@ namespace Quizzappy
                 var multipleChoiceQuestions = new List<MultipleChoiceQuestion>();
                 var shortAnswerQuestions = new List<ShortAnswerQuestion>();
                 var fillTheBlanksQuestions = new List<FillTheBlanksQuestion>();
+                int totalScore = 0;
                 
                 for(int i = 0; i < questionLength; i++)
                 {
@@ -75,11 +76,12 @@ namespace Quizzappy
                                 var question = new MultipleChoiceQuestion
                                 {
                                     QuestionId = totalQuestions,
+                                    Score = 1,
                                     QuestionText = $"{totalQuestions}" + ": " + beginningQuestion + " " + endQuestion,
                                     Answers = multipleChoiceAnswers,
                                     CorrectAnswer = "E",
                                 };
-
+                                totalScore += 1;
                                 multipleChoiceQuestions.Add(question);
                                 break;
                             }
@@ -88,10 +90,11 @@ namespace Quizzappy
                                 var question = new ShortAnswerQuestion
                                 {
                                     QuestionId = totalQuestions,
+                                    Score = 5,
                                     QuestionText = $"{totalQuestions}" + ": " + beginningQuestion + " " + endQuestion,
                                     WordLimit = 500+5*rnd.Next(0, 100)
                                 };
-
+                                totalScore += 5;
                                 shortAnswerQuestions.Add(question);
                                 break;
                             }
@@ -116,10 +119,11 @@ namespace Quizzappy
                                 var question = new FillTheBlanksQuestion
                                 {
                                     QuestionId = totalQuestions,
+                                    Score = 1,
                                     QuestionText = $"{totalQuestions}" + ": "+  beginningQuestion + " " + endQuestion,
                                     CorrectAnswers = fillTheBlanksAnswers
                                 };
-
+                                totalScore += 1;
                                 fillTheBlanksQuestions.Add(question);
                                 break;
                             }
@@ -132,6 +136,7 @@ namespace Quizzappy
                 {
                     QuizName = quizName,
                     QuizId = x,
+                    TotalScore = totalScore,
                     MultipleChoiceQuestions = multipleChoiceQuestions,
                     ShortAnswerQuestions = shortAnswerQuestions,
                     FillTheBlanksQuestions = fillTheBlanksQuestions
