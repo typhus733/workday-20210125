@@ -79,7 +79,7 @@ namespace Quizzappy
                                     Score = 1,
                                     QuestionText = $"{totalQuestions}" + ": " + beginningQuestion + " " + endQuestion,
                                     Answers = multipleChoiceAnswers,
-                                    CorrectAnswer = new TextAnswer {AnswerId= totalAnswers,Answer = "E" }
+                                    CorrectAnswer = "E"
                                 };
                                 totalScore += 1;
                                 multipleChoiceQuestions.Add(question);
